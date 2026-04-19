@@ -1,0 +1,7 @@
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.12.0"}
+        ring/ring-jetty-adapter {:mvn/version "1.13.0"}
+        ring/ring-defaults {:mvn/version "0.5.0"}
+        metosin/reitit-ring {:mvn/version "0.7.2"}
+        com.lambdaisland/hiccup {:mvn/version "0.0.33"}}
+ :aliases {:dev {:main-opts ["-m" "com.example.main"]}}}
