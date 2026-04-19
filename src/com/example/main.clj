@@ -1,6 +1,7 @@
 (ns com.example.main
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [reitit.ring :as ring]
             [com.example.pages.plain :as plain]
             [com.example.pages.htmx :as htmx]
@@ -40,7 +41,7 @@
                                                             :date-field ""}})
                                   {:status 200 :body "ok"})}}]])
    (ring/create-default-handler)
-   {:middleware [wrap-params]}))
+   {:middleware [wrap-params wrap-multipart-params]}))
 
 (defn -main [& _args]
   (println "Starting server on port 8080...")

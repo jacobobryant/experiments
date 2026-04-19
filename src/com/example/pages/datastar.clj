@@ -73,7 +73,10 @@
   (let [{:keys [items settings]} @state
         html (hiccup/render (render-body items settings) {})
         html (str/replace html #"^<!DOCTYPE html>\n?" "")
-        sse (str "event: datastar-merge-fragments\ndata: fragments " html "\n\n")]
+        ;; SSE format: each line of data must be prefixed with "data: "
+        data-lines (str/split (str "fragments " html) #"\n")
+        sse-data (str/join "\n" (map #(str "data: " %) data-lines))
+        sse (str "event: datastar-merge-fragments\n" sse-data "\n\n")]
     {:status 200
      :headers {"Content-Type" "text/event-stream"
                "Cache-Control" "no-cache"}

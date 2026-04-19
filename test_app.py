@@ -115,6 +115,29 @@ def test_datastar_page():
         val = first_qty.input_value()
         assert val == "0", f"Expected 0, got {val}"
 
+        # Test save with modified quantities
+        page.locator("input[name='qty-2']").fill("42")
+        page.locator("input[name='qty-4']").fill("99")
+        page.locator("button:text('Save')").first.click()
+        page.wait_for_timeout(3000)
+        assert page.locator("input[name='qty-2']").input_value() == "42", \
+            f"Expected 42, got {page.locator('input[name=\"qty-2\"]').input_value()}"
+        assert page.locator("input[name='qty-4']").input_value() == "99", \
+            f"Expected 99, got {page.locator('input[name=\"qty-4\"]').input_value()}"
+
+        # Test settings form
+        page.locator("#text-field").fill("hello world")
+        page.locator("#select-field").select_option("option-b")
+        page.locator("#date-field").fill("2026-01-15")
+        page.locator("button:text('Save Settings')").click()
+        page.wait_for_timeout(3000)
+        assert page.locator("#text-field").input_value() == "hello world", \
+            f"Expected 'hello world', got {page.locator('#text-field').input_value()}"
+        assert page.locator("#select-field").input_value() == "option-b", \
+            f"Expected 'option-b', got {page.locator('#select-field').input_value()}"
+        assert page.locator("#date-field").input_value() == "2026-01-15", \
+            f"Expected '2026-01-15', got {page.locator('#date-field').input_value()}"
+
         print("PASS: Datastar page")
         browser.close()
 
